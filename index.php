@@ -22,6 +22,7 @@
         "Item 3",
         "Item 4"
     ];
+    $todos = [];
 
     $todosCount = count($todos);
 ?>
@@ -42,12 +43,28 @@
                 </div>
             </div>
 
+
+            <form action="add.php" method="POST">
+                <div class="grid-container input-form">
+                    <div class="grid-item">
+                        <input type="text" name="newTodo" placeholder="Do a Flip">
+                    </div>
+
+                    <div class="grid-item">
+                        <button class="add-btn" name="addTodo">Add</button>
+                    </div>
+                </div>
+            </form>
+
+
             <div>
                 <ul class="todos-list">
-                    <?php foreach ($todos AS $todo) { ?>
-                        <li class="list-item">
-                            <?= $todo ?>
-                        </li>
+                    <?php if(!empty($todos)) { ?>
+                        <?php foreach ($todos AS $todo) { ?>
+                            <li class="list-item">
+                                <?= $todo ?>
+                            </li>
+                        <?php } ?>
                     <?php } ?>
                 </ul>
             </div>

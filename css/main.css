@@ -93,6 +93,7 @@ body {
     border-top: 1px solid black;
     border-bottom: 1px solid black;
     margin-bottom: 1em;
+    padding: .75em 0 .75em;
 }
 
 h1 {
@@ -114,6 +115,21 @@ h1 {
     padding-left: 1em;
 }
 
+.add-btn {
+    background-color: rgb(210, 105, 30);
+    border: 1px solid black;
+    border-radius: 1em;
+    padding: 0 1em;
+}
+
+.add-btn:hover {
+    background-color: rgba(210, 105, 30, 0.50);
+}
+
+.input-form {
+    margin-bottom: .75em;
+}
+
 /* Grid related */
 .grid-container {
     display: grid;
@@ -124,4 +140,5 @@ h1 {
 
 .grid-item {
     text-align: center;
+    margin: 0 auto;
 }
