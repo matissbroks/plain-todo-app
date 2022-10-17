@@ -115,11 +115,14 @@ h1 {
     padding-left: 1em;
 }
 
-.add-btn {
-    background-color: rgb(210, 105, 30);
+.btn {
     border: 1px solid black;
     border-radius: 1em;
     padding: 0 1em;
+}
+
+.add-btn {
+    background-color: rgb(210, 105, 30);
 }
 
 .add-btn:hover {
@@ -128,6 +131,37 @@ h1 {
 
 .input-form {
     margin-bottom: .75em;
+}
+
+.btn-done {
+    background-color: rgb(21, 183, 17);
+    font-size: .6em;
+    margin-left: .5rem;
+}
+
+.btn-done:hover {
+    background-color: rgb(21, 183, 17, 0.5);
+    color: #fff;
+}
+
+.btn-delete {
+    background-color: rgb(187, 64, 64);
+    color: #fff;
+    font-size: .6em;
+    margin-left: .5rem;
+}
+
+.btn-delete:hover {
+    background-color: rgb(187, 64, 64, 0.5);
+    color: #000;
+}
+
+.done .todo {
+    text-decoration-line: line-through;
+}
+
+a {
+    text-decoration: none;
 }
 
 /* Grid related */

@@ -17,12 +17,11 @@
 
 <?php
     $todos = [
-        "Item 1",
-        "Item 2",
-        "Item 3",
-        "Item 4"
+        ["title" => "Item 1Item 1Item 1", "status" => 1],
+        ["title" => "Item 2", "status" => 0],
+        ["title" => "Item 3", "status" => 1],
     ];
-    $todos = [];
+//    $todos = [];
 
     $todosCount = count($todos);
 ?>
@@ -44,14 +43,14 @@
             </div>
 
 
-            <form action="add.php" method="POST">
+            <form action="actions/add.php" method="POST">
                 <div class="grid-container input-form">
                     <div class="grid-item">
                         <input type="text" name="newTodo" placeholder="Do a Flip">
                     </div>
 
                     <div class="grid-item">
-                        <button class="add-btn" name="addTodo">Add</button>
+                        <button class="btn add-btn" name="addTodo">Add</button>
                     </div>
                 </div>
             </form>
@@ -60,9 +59,21 @@
             <div>
                 <ul class="todos-list">
                     <?php if(!empty($todos)) { ?>
-                        <?php foreach ($todos AS $todo) { ?>
-                            <li class="list-item">
-                                <?= $todo ?>
+                        <?php foreach ($todos AS $key => $todo) { ?>
+                            <li class="list-item <?= ($todo["status"] == 0) ? "done" : "" ?>" >
+                                <span class="todo">
+                                    <?= $todo["title"] ?>
+                                </span>
+
+                                <?php if($todo["status"]) { ?>
+                                    <a href="actions/markDone.php/?id=<?= $key ?>" methods="post">
+                                        <button class="btn btn-done">Done</button>
+                                    </a>
+                                <?php } ?>
+
+                                <a href="actions/delete.php/?id=<?= $key ?>" methods="post">
+                                    <button class="btn btn-delete">Delete</button>
+                                </a>
                             </li>
                         <?php } ?>
                     <?php } ?>
