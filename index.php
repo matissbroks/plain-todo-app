@@ -1,3 +1,8 @@
+<?php
+    require_once "includes/db.inc.php";
+    require_once "includes/infoTexts.php";
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -16,12 +21,15 @@
 <body>
 
 <?php
-    $todos = [
-        ["title" => "Item 1Item 1Item 1", "status" => 1],
-        ["title" => "Item 2", "status" => 0],
-        ["title" => "Item 3", "status" => 1],
-    ];
-//    $todos = [];
+    $todos = [];
+    $todosSelectSQL = "SELECT * FROM todo";
+    $todosSelectSQL = $conn->query($todosSelectSQL);
+
+    while($todoRow = $todosSelectSQL->fetch_assoc()) {
+        $todos[] = $todoRow;
+    }
+
+    $conn->close();
 
     $todosCount = count($todos);
 ?>
@@ -55,23 +63,40 @@
                 </div>
             </form>
 
+            <?php if(isset($_GET['error']) || isset($_GET['success'])) { ?>
+                <?php
+                    if(isset($_GET['error'])) {
+                        $classToAdd = "info-clr-warning";
+                        $textToShow = $texts["error"][$_GET['error']];
+                    }
+                    else {
+                        $classToAdd = "info-clr-success";
+                        $textToShow = $texts["success"][$_GET['success']];
+                    }
+                ?>
+                <div class="grid-container info-box <?= $classToAdd ?>">
+                    <div class="grid-item info-text">
+                        <p><?= $textToShow ?></p>
+                    </div>
+                </div>
+            <?php } ?>
 
             <div>
                 <ul class="todos-list">
                     <?php if(!empty($todos)) { ?>
-                        <?php foreach ($todos AS $key => $todo) { ?>
-                            <li class="list-item <?= ($todo["status"] == 0) ? "done" : "" ?>" >
+                        <?php foreach ($todos AS $todo) { ?>
+                            <li class="list-item <?= ($todo["is_done"]) ? "done" : "" ?>" >
                                 <span class="todo">
                                     <?= $todo["title"] ?>
                                 </span>
 
-                                <?php if($todo["status"]) { ?>
-                                    <a href="actions/markDone.php/?id=<?= $key ?>" methods="post">
+                                <?php if(!$todo["is_done"]) { ?>
+                                    <a href="actions/markDone.php?id=<?= $todo["id"] ?>">
                                         <button class="btn btn-done">Done</button>
                                     </a>
                                 <?php } ?>
 
-                                <a href="actions/delete.php/?id=<?= $key ?>" methods="post">
+                                <a href="actions/delete.php?id=<?= $todo["id"] ?>">
                                     <button class="btn btn-delete">Delete</button>
                                 </a>
                             </li>

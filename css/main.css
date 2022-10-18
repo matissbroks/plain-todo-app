@@ -164,6 +164,26 @@ a {
     text-decoration: none;
 }
 
+.info-box {
+    border-radius: .5rem;
+    margin: 1em 0.75em;
+    font-weight: bold;
+}
+
+.info-text {
+    grid-column-start: 2;
+}
+
+.info-clr-warning {
+    background-color: indianred;
+    border: 1px solid red;
+}
+
+.info-clr-success {
+    background-color: lightgreen;
+    border: 1px solid green;
+}
+
 /* Grid related */
 .grid-container {
     display: grid;
