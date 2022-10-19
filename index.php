@@ -35,7 +35,7 @@
 ?>
 
     <div class="container">
-        <h1>Plain To-Do App</h1>
+        <h1><a href="index.php">Plain To-Do App</a></h1>
 
         <div class="content-box">
             <div class="header">
