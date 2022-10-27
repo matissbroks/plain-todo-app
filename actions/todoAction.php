@@ -14,13 +14,15 @@ else {
         if ($ifExistResult->num_rows > 0) {
             if ($_POST["done"] == 1) {
                 $sqlQuery = "UPDATE todo SET is_done = 1 WHERE id = " . $itemId;
+                $urlItem = "marked-done";
             }
             else if ($_POST["delete"] == 1) {
                 $sqlQuery = "DELETE FROM todo WHERE id = " . $itemId;
+                $urlItem = "deleted";
             }
 
             if ($conn->query($sqlQuery) === true) {
-                header("location: ../index.php?success=marked-done");
+                header("location: ../index.php?success=".$urlItem);
                 exit();
             } else {
                 echo "Error: " . $conn->error;
