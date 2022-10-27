@@ -74,13 +74,13 @@ select {
 }
 
 /* Custom CSS */
+:root {
+    --clr-bg: darkcyan;
+}
+
 body {
     font-family: 'Montserrat', sans-serif;
     background: cadetblue;
-}
-
-:root {
-    --clr-bg: darkcyan;
 }
 
 .info-container {
@@ -91,15 +91,27 @@ body {
 }
 
 .second-container {
-    /*background-color: indianred;*/
     background-color: var(--clr-bg);
     border: 3px solid black;
 }
 
 .todos-container {
-    /*background-color: green;*/
     background-color: var(--clr-bg);
     border: 3px solid black;
     border-bottom-left-radius: 2rem;
     border-bottom-right-radius: 2rem;
+}
+
+.done {
+    text-decoration-line: line-through;
+}
+
+.no-decoration {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.no-decoration:hover {
+    color: black;
 }

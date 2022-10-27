@@ -44,7 +44,7 @@
 
     <div class="container mt-5">
         <h1 class="text-center mb-2">
-            <a href="index.php">Plain To-Do App | Bootstrap version</a>
+            <a class="no-decoration" href="index.php">Plain To-Do App | Bootstrap version</a>
         </h1>
 
         <div class="container info-container mb-2 p-2">
@@ -55,6 +55,27 @@
         </div>
 
         <div class="container mb-2 second-container">
+            <?php if( isset($_GET['error']) || isset($_GET['success']) ) { ?>
+                <?php
+                    if( isset($_GET['error']) ) {
+                        $classToAdd = "alert-danger";
+                        $textToShow = $texts["error"][$_GET['error']];
+                    }
+                    else {
+                        $classToAdd = "alert-success";
+                        $textToShow = $texts["success"][$_GET['success']];
+                    }
+                ?>
+
+                <div class="row mt-3">
+                    <div class="col">
+                        <div class="alert <?= $classToAdd; ?>" role="alert">
+                            <?= $textToShow; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+
             <form class="mt-3" action="actions/add.php" method="post">
                 <div class="form-group">
                     <div class="row">
@@ -71,18 +92,39 @@
         </div>
 
         <div class="container todos-container mb-2 pb-3">
-            <?php foreach ($todos AS $todo) { ?>
-                <div class="alert alert-primary individual-element mb-2 mt-2">
-                    <form action="actions/todoAction.php" method="post">
-                        <div class="row">
-                            <div class="offset-1 col-8"><?= $todo["title"]; ?> [<?= $todo["is_done"]; ?>]</div>
-                            <div class="col">
-                                <button type="submit" class="btn btn-success" name="done" value="1">Done</button>
-                                <button type="submit" class="btn btn-danger" name="delete" value="1">Delete</button>
-                                <input type="hidden" name="todo-item" value="<?= $todo["id"]; ?>">
+            <?php if(!empty($todos)) { ?>
+                <?php foreach ($todos AS $todo) { ?>
+                    <?php
+                        $hide = (bool) $todo["is_done"];
+                        $btnClassToAdd = (!$hide) ? "" : "done";
+                    ?>
+
+                    <div class="alert alert-primary individual-element mb-2 mt-2">
+                        <form action="actions/todoAction.php" method="post">
+                            <div class="row">
+                                <div class="offset-1 col-8 <?= $btnClassToAdd; ?>">
+                                    <?= $todo["title"]; ?>
+                                </div>
+
+                                <div class="col">
+                                    <?php if(!$hide) { ?>
+                                        <button type="submit" class="btn btn-success" name="done" value="1">Done</button>
+                                    <?php } ?>
+
+                                    <button type="submit" class="btn btn-danger" name="delete" value="1">Delete</button>
+                                    <input type="hidden" name="todo-item" value="<?= $todo["id"]; ?>">
+                                </div>
                             </div>
+                        </form>
+                    </div>
+                <?php } ?>
+            <?php } else { ?>
+                <div class="alert alert-warning individual-element mb-2 mt-2">
+                    <div class="row">
+                        <div class="col text-center">
+                            There is no added Todos!
                         </div>
-                    </form>
+                    </div>
                 </div>
             <?php } ?>
         </div>
