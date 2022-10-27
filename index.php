@@ -103,7 +103,7 @@
                         <form action="actions/todoAction.php" method="post">
                             <div class="row">
                                 <div class="offset-1 col-8 <?= $btnClassToAdd; ?>">
-                                    <?= $todo["title"]; ?>
+                                    <?= ucfirst($todo["title"]); ?>
                                 </div>
 
                                 <div class="col">
