@@ -27,8 +27,65 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-    <h1>
-        <a href="index.php">Plain To-Do App | Bootstrap version</a>
-    </h1>
+
+<?php
+    $todos = [];
+    $todosSelectSQL = "SELECT * FROM todo";
+    $todosSelectSQL = $conn->query($todosSelectSQL);
+
+    while($todoRow = $todosSelectSQL->fetch_assoc()) {
+        $todos[] = $todoRow;
+    }
+
+    $conn->close();
+
+    $todosCount = count($todos);
+?>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-2">
+            <a href="index.php">Plain To-Do App | Bootstrap version</a>
+        </h1>
+
+        <div class="container info-container mb-2 p-2">
+            <div class="row text-center">
+                <div class="col font-weight-bold">Number of items</div>
+                <div class="col font-weight-bold"><?= $todosCount; ?></div>
+            </div>
+        </div>
+
+        <div class="container mb-2 second-container">
+            <form class="mt-3" action="actions/add.php" method="post">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="offset-2 col-6">
+                            <input type="text" class="form-control" name="todo-item" placeholder="Clean house">
+                        </div>
+
+                        <div class="col-2">
+                            <button type="submit" class="btn btn-primary" name="addTodo">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="container todos-container mb-2 pb-3">
+            <?php foreach ($todos AS $todo) { ?>
+                <div class="alert alert-primary individual-element mb-2 mt-2">
+                    <form action="actions/todoAction.php" method="post">
+                        <div class="row">
+                            <div class="offset-1 col-8"><?= $todo["title"]; ?> [<?= $todo["is_done"]; ?>]</div>
+                            <div class="col">
+                                <button type="submit" class="btn btn-success" name="done" value="1">Done</button>
+                                <button type="submit" class="btn btn-danger" name="delete" value="1">Delete</button>
+                                <input type="hidden" name="todo-item" value="<?= $todo["id"]; ?>">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
 </body>
 </html>

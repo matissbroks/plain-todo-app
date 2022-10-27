@@ -6,12 +6,12 @@ if(!isset($_POST['addTodo'])) {
     exit();
 }
 else {
-    if(empty($_POST["newTodo"])) {
+    if(empty($_POST["todo-item"])) {
         header("location: ../index.php?error=empty-data");
         exit();
     }
     else {
-        $insertSql = "INSERT INTO todo (title) VALUES ('".$_POST["newTodo"]."')";
+        $insertSql = "INSERT INTO todo (title) VALUES ('".$_POST["todo-item"]."')";
 
         if ($conn->query($insertSql) === true) {
             header("location: ../index.php?success=created");
