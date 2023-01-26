@@ -1,5 +1,5 @@
 <?php
-    $servername = "localhost";
+    $servername = "db";
     $username = "phpuser";
     $password = "phpuser";
     $dbname = "plain_todo_app";
