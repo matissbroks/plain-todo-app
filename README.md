@@ -12,7 +12,11 @@ Small PHP To-Do app project, created with plain PHP and CSS
 
 ### Docker setup
 
-1. Run `docker compose up` can add `-d` to run in detached mode
-2. Somehow connect ot database (I managed to connect with Jetbrains DataGrip)
-3. In MySQL database execute `includes/db_create.sql` scrip
-4. Go To `http://localhost:8000/` and you are done!
+1. Clone this repo
+2. change directory to this project `cd PROEJCT_DIR`
+3. Run `docker-compose up` can add `-d` to run in detached mode
+4. Connect to MySQL container `docker exec -it plain-todo-db bash`
+5. Login to MySQL `mysql -u phpuser -p` enter appropriate password
+6. Run `use plain_todo_app;` to change databse in use
+7. Execute script from `includes/db_create.sql` to create table
+8. Go To `http://localhost/` and you are done!
