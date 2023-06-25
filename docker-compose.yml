@@ -1,25 +1,52 @@
-version: '3.8'
+version: '3'
 services:
-  php-apache-environment:
-    container_name: php-apache
+  # PHP Service
+  app:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: plain-todo-app
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www
     depends_on:
       - db
     volumes:
-      - ./:/var/www/html/
-    ports:
-      - 8000:80
+      - ./:/var/www
+    networks:
+      - app-network
 
+  # Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: plain-todo-webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network
+
+  # MySQL Service
   db:
-    container_name: db
+    container_name: plain-todo-db
     image: mysql
-    restart: always
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root-password
       MYSQL_DATABASE: plain_todo_app
       MYSQL_USER: phpuser
       MYSQL_PASSWORD: phpuser
     ports:
-      - "9906:3306"
+      - "3306:3306"
+    networks:
+      - app-network
+
+# Docker Networks
+networks:
+  app-network:
+    driver: bridge
