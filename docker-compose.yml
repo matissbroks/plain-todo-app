@@ -1,0 +1,52 @@
+version: '3'
+name: plain-todo-bootstrap
+services:
+  # PHP Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: plain-todo-bootstrap-app
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www
+    depends_on:
+      - db
+    volumes:
+      - ./:/var/www
+    networks:
+      - app-network
+
+  # Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: plain-todo-bootstrap-webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network
+
+  # MySQL Service
+  db:
+    container_name: plain-todo-bootstrap-db
+    image: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root-password
+      MYSQL_DATABASE: plain_todo_app
+      MYSQL_USER: phpuser
+      MYSQL_PASSWORD: phpuser
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+
+# Docker Networks
+networks:
+  app-network:
+    driver: bridge
